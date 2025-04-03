@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:hockey_family/utils/firebase.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -30,7 +37,49 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: FirestoreDataScreen(),
+    );
+  }
+}
+
+class FirestoreDataScreen extends StatelessWidget {
+  // Create an instance of FirestoreService
+  final FirestoreService _firestoreService = FirestoreService();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Firestore Data'),
+      ),
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+        future: _firestoreService.getGames(),
+        // Fetch users using FirestoreService
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            // If data exists, display the list
+            var games = snapshot.data!;
+            return ListView.builder(
+              itemCount: games.length,
+              itemBuilder: (context, index) {
+                var game = games[index];
+                var reservations = game["Reservations"] ?? 'No Reservation';
+                return ListTile(
+                  title: Text("Game index : ${index.toString()}"),
+                  subtitle: Text(reservations.toString()),
+                );
+              },
+            );
+          } else {
+            return Center(child: Text('No Data Available'));
+          }
+        },
+      ),
     );
   }
 }
