@@ -1,13 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreService {
-  final _db = FirebaseFirestore.instance;
 
-  CollectionReference get gamesCollection => _db.collection('Games');
+  static final FirestoreService _firestoreService = FirestoreService.internal();
+
+  factory FirestoreService() {
+    return _firestoreService;
+  }
+  FirestoreService.internal();
+
 
 
   Future<List<Map<String, dynamic>>> getGames() async {
     try {
+      final _db = FirebaseFirestore.instance;
+      CollectionReference gamesCollection = _db.collection('Games');
+
       QuerySnapshot snapshot = await gamesCollection.get();
       List<QueryDocumentSnapshot> documents = snapshot.docs;
 

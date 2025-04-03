@@ -27,6 +27,11 @@ class _ScaffoldWithNavBar extends State<ScaffoldWithNavBar> {
         initialLocation: RouteNames.account,
         label: "Account"
     ),
+    const ScaffoldWithNavBarDestination(
+        icon: Icon(Icons.flood),
+        initialLocation: RouteNames.test,
+        label: "Test"
+    ),
     //TODO: Add more tabs here
   ];
 
