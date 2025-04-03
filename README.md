@@ -1,67 +1,16 @@
-# Cahier des charges – HockeyFamily
+# hockey_family
 
-## 1. Contexte et Objectifs
+A new Flutter project.
 
-L’application **HockeyFamily** vise à simplifier la gestion et le partage de billets de hockey au sein d’une même famille disposant d’un abonnement commun. Grâce à une plateforme fluide et intuitive, les utilisateurs pourront organiser leurs réservations et suivre leurs équipes préférées en temps réel.
+## Getting Started
 
-### Objectifs principaux :
+This project is a starting point for a Flutter application.
 
-- Optimiser la répartition et la gestion des billets familiaux.
-- Faciliter la consultation des matchs et des informations associées.
-- Notifier les utilisateurs des événements importants liés aux suivis en direct.
+A few resources to get you started if this is your first Flutter project:
 
-## 2. Fonctionnalités
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-### 2.1. Gestion des Comptes Utilisateurs
-
-- Ajout et suppression de membres du groupe familial.
-- Historique des réservations.
-- Authentification via email/mot de passe.
-
-### 2.2. Affichage des Matchs
-
-- Liste des matchs programmés avec :
-    - Date, heure, lieu, équipes opposées.
-    - Statut du match (à venir, en cours, terminé).
-- Filtres pour trier les matchs par équipe favorite, date ou lieu.
-- Intégration avec des calendriers externes.
-
-### 2.3. Réservation et Planification
-
-- Réservation de billets directement via l’application.
-- Notifications pour :
-    - L’ouverture des réservations.
-    - La confirmation d’attribution d’un billet.
-    - Un rappel avant le match.
-
-### 2.4. Gestion des Billets
-
-- Affichage des billets sous forme de QR Code.
-- Informations détaillées sur chaque billet :
-    - Numéro de place, tribune, porte d’entrée.
-- Transfert de billet à un autre membre de la famille en cas d’empêchement.
-
-### 2.5. Suivi des Matchs en Direct
-
-- Mises à jour en temps réel des matchs en cours :
-    - Score et temps de jeu.
-    - Actions importantes (buts, pénalités, arrêts décisifs).
-    - Statistiques en direct (tirs cadrés, possession, pénalités).
-- Notifications push pour :
-    - Début du match.
-    - Marquage d’un but par une équipe favorite.
-    - Actions majeures du match (expulsions, blessures, moments clés).
-
-## 3. Plateforme
-
-- **Application Android**
-- **Version web**
-
-### Langues disponibles :
-
-- Anglais
-- Français
-
-## 4. Planification
-
-Pour la gestion et le suivi des tâches du projet, nous utiliserons **GitHub** afin de planifier efficacement le développement, suivre l’avancement et organiser les différentes étapes du projet.
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
