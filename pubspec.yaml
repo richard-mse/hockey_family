@@ -39,6 +39,7 @@ dependencies:
   more_widgets: ^3.2.2
   flutter_bloc: ^9.1.0
   go_router: ^14.8.1
+  table_calendar: ^3.1.3
 
 dev_dependencies:
   flutter_test:

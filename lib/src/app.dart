@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('en', ''), // English, no country code
+        Locale('fr', 'CH')
       ],
 
       onGenerateTitle: (BuildContext context) =>
