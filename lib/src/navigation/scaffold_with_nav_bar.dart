@@ -28,6 +28,12 @@ class _ScaffoldWithNavBar extends State<ScaffoldWithNavBar> {
         label: "Account"
     ),
     //TODO: Add more tabs here
+    const ScaffoldWithNavBarDestination(
+        icon: Icon(Icons.houseboat),
+        initialLocation: RouteNames.match,
+        label: "Match"
+    ),
+
   ];
 
   // getter that computes the current index from the current location,
