@@ -1,1 +1,2 @@
 const String hockeyImgUrl = "https://upload.wikimedia.org/wikipedia/en/thumb/4/4a/Gen%C3%A8ve-Servette_HC_logo.svg/474px-Gen%C3%A8ve-Servette_HC_logo.svg.png?20230607000654";
+const String mainTeamName = "GSHC";

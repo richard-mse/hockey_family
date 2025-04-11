@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../../constants.dart';
-import '../../../../utils/event.dart';
+import '../../../../repositories/game_repository.dart';
+import '../../../../repositories/models/game_model.dart';
+import '../../match_page.dart';
 import '../bloc/home_bloc.dart';
 
 part './home_view_initial.dart';
@@ -19,7 +21,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeBloc()..add(HomeInitEvent()),
+      create: (context) => HomeBloc(repository: GameRepository.instance)..add(HomeInitEvent()),
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, HomeState state) => Scaffold(
           appBar: AppBar(

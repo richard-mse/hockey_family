@@ -1,19 +1,45 @@
 part of 'home_view.dart';
 
 class _HomeViewLoaded extends StatelessWidget {
-  const _HomeViewLoaded({super.key});
+  const _HomeViewLoaded();
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<HomeBloc>();
-    final state = bloc.state as HomeLoadedState;
-    return TableCalendarHockey();
+    return BlocListener<HomeBloc, HomeState>(
+      listener: (context, state) {
+        if (state is HomeNavigateToGameDetailState) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => GameDetailPage(game: state.game),
+            ),
+          );
+
+          context.read<HomeBloc>().add(const HomeResetNavigationEvent());
+        }
+      },
+      child: Builder(
+        builder: (context) {
+          final state = context.watch<HomeBloc>().state;
+          if (state is HomeLoadedState) {
+            return TableCalendarHockey(gamesList: state.games);
+          } else if (state is HomeLoadingState) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is HomeFailureState) {
+            return Center(child: Text("Erreur : ${state.errorMessage}"));
+          } else {
+            return const SizedBox(); // fallback
+          }
+        },
+      ),
+    );
   }
 }
 
 
 class TableCalendarHockey extends StatefulWidget {
-  const TableCalendarHockey({super.key});
+  final Set<Game> gamesList;
+  const TableCalendarHockey({super.key, required this.gamesList});
+
 
   @override
   State<TableCalendarHockey> createState() => _TableCalendarHockeyState();
@@ -24,23 +50,11 @@ class _TableCalendarHockeyState extends State<TableCalendarHockey> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  late final ValueNotifier<Event?> _selectedEvent; // ⬅️ nullable
 
   @override
   void initState() {
     super.initState();
     _selectedDay = _focusedDay;
-    _selectedEvent = ValueNotifier(_getEventForDay(_selectedDay!));
-  }
-
-  @override
-  void dispose() {
-    _selectedEvent.dispose();
-    super.dispose();
-  }
-
-  Event? _getEventForDay(DateTime day) {
-    return kEvents[DateTime.utc(day.year, day.month, day.day)];
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -48,8 +62,18 @@ class _TableCalendarHockeyState extends State<TableCalendarHockey> {
       setState(() {
         _selectedDay = selectedDay;
       });
+    }
+  }
 
-      _selectedEvent.value = _getEventForDay(selectedDay);
+  Game? _getGameIfExists(DateTime day) {
+    final dayUtc = DateTime.utc(day.year, day.month, day.day);
+    try {
+      return widget.gamesList.firstWhere((game) {
+        final gameUtc = DateTime.utc(game.date.year, game.date.month, game.date.day);
+        return ((gameUtc == dayUtc) && (game.homeTeamShortName == mainTeamName));
+      });
+    } catch (_) {
+      return null;
     }
   }
 
@@ -65,7 +89,6 @@ class _TableCalendarHockeyState extends State<TableCalendarHockey> {
           rowHeight: 100,
           selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
           onDaySelected: _onDaySelected,
-          eventLoader: (day) => _getEventForDay(day) != null ? [true] : [],
           onFormatChanged: (format) {
             setState(() {
               _calendarFormat = format;
@@ -81,41 +104,30 @@ class _TableCalendarHockeyState extends State<TableCalendarHockey> {
           ),
           calendarBuilders: CalendarBuilders(
             defaultBuilder: (context, day, focusedDay) {
-              final hasEvent = _getEventForDay(day) != null;
-              return MyDayCellWidget(day: day, showImage: hasEvent);
-            },
-            selectedBuilder: (context, day, focusedDay) {
-              final hasEvent = _getEventForDay(day) != null;
+              final game = _getGameIfExists(day);
               return MyDayCellWidget(
                 day: day,
+                game: game,
+                hasGame: game != null,
+              );
+            },
+            selectedBuilder: (context, day, focusedDay) {
+              final game = _getGameIfExists(day);
+              return MyDayCellWidget(
+                day: day,
+                game: game,
                 isSelected: true,
                 isFocus: isSameDay(_selectedDay, focusedDay),
-                showImage: hasEvent,
+                hasGame: game != null,
               );
             },
             todayBuilder: (context, day, focusedDay) {
-              final hasEvent = _getEventForDay(day) != null;
+              final game = _getGameIfExists(day);
               return MyDayCellWidget(
                 day: day,
+                game: game,
                 isFocus: true,
-                showImage: hasEvent,
-              );
-            },
-          ),
-        ),
-        const SizedBox(height: 8.0),
-
-        // 🧩 Placeholder ou contenu statique
-        Expanded(
-          child: ValueListenableBuilder<Event?>(
-            valueListenable: _selectedEvent,
-            builder: (context, event, _) {
-              return Center(
-                child: Placeholder(
-                  fallbackHeight: 100,
-                  color: Colors.blueGrey,
-                  strokeWidth: 2,
-                ),
+                hasGame: game != null,
               );
             },
           ),
@@ -130,53 +142,63 @@ class MyDayCellWidget extends StatelessWidget {
   final DateTime day;
   final bool isSelected;
   final bool isFocus;
-  final bool showImage;
+  final bool hasGame;
+  final Game? game;
 
   const MyDayCellWidget({
     super.key,
     required this.day,
     this.isSelected = false,
     this.isFocus = false,
-    this.showImage = false,
+    this.hasGame = false,
+    this.game,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(2),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: isSelected ? Colors.white : Colors.transparent,
-          width: 2,
+    return GestureDetector(
+      onDoubleTap: () {
+        if (game != null) {
+          context.read<HomeBloc>().add(HomeNavigateToGameDetailEvent(game!));
+        }
+      },
+      child: Container(
+        margin: const EdgeInsets.all(2),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: isSelected ? Colors.black : Colors.transparent,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(8),
         ),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: Text(
-                '${day.day}',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: isFocus ? Colors.red : Colors.white,
+        child: Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: Text(
+                  '${day.day}',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: isFocus ? Colors.red : Colors.blue,
+                  ),
                 ),
               ),
             ),
-          ),
-          if (showImage)
-            Expanded(
-              child: ClipRRect(
-                child: Image.network(
-                  hockeyImgUrl,
-                  fit: BoxFit.contain,
+            if (hasGame)
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Image.network(
+                    hockeyImgUrl,
+                    fit: BoxFit.contain,
+                  ),
                 ),
-              ),
-            )
-          else
-            const Spacer(),
-        ],
+              )
+            else
+              const Spacer(),
+          ],
+        ),
       ),
     );
   }
