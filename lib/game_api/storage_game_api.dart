@@ -1,34 +1,25 @@
-
-
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
+import '../src/repositories/models/game_model.dart';
+import 'game_api.dart';
 
-import '../repositories/models/game_model.dart';
-
-class NationalLeagueAPI {
-  static final NationalLeagueAPI _nationalLeagueAPI = NationalLeagueAPI.internal();
-
-  factory NationalLeagueAPI() {
-    return _nationalLeagueAPI;
-  }
-
-  NationalLeagueAPI.internal();
-
-  Future<Set<Game>> fetchGames() async {
+class StorageGameApi extends GameApi {
+  @override
+  Future<Set<Game>> getGames() async {
     try {
       final response = await http.get(
         Uri.parse('https://nationalleague.ch/api/games?lang=fr-CH'),
       );
 
       if (response.statusCode == 200) {
-        var parsedJson = jsonDecode(response.body);
-        var games = <Game>{};
+        final parsedJson = jsonDecode(response.body);
+        final games = <Game>{};
+
         for (var game in parsedJson) {
           games.add(Game.fromJson(game));
         }
-        return games;
 
+        return games;
       } else {
         throw Exception('Failed to load data: ${response.statusCode}');
       }
@@ -37,4 +28,3 @@ class NationalLeagueAPI {
     }
   }
 }
-

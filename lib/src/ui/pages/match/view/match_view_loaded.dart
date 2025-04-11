@@ -7,9 +7,9 @@ class _MatchViewLoaded extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<MatchBloc>();
     final state = bloc.state as MatchLoadedState;
-    state.games.forEach((game) => {
-      print(game.gameId)
-    });
+    // state.games.forEach((game) => {
+    //   print(game.gameId)
+    // });
 
     return const Center(
       child: Text('Loaded State'),
