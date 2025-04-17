@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hockey_family/src/services/nationalleague_api.dart';
 
+import '../../../../repositories/models/game_model.dart';
+
 part 'match_event.dart';
 part 'match_state.dart';
 
