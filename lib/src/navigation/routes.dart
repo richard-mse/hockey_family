@@ -3,4 +3,5 @@ abstract class RouteNames {
   static const account = "/account";
   static const splash = "/splash";
   static const match = "/match";
+  static const login = "/login";
 }
