@@ -9,13 +9,13 @@ class _FirestoreTestsViewLoaded extends StatelessWidget {
     final state = bloc.state as FirestoreTestsLoadedState;
 
     return ListView.builder(
-      itemCount: state.games.length,
+      itemCount: state.users.length,
       itemBuilder: (context, index) {
-        var game = state.games[index];
-        var reservations = game["Reservations"] ?? 'No Reservation';
+        var user = state.users[index];
+        var username = user["Username"] ?? 'No Username';
         return ListTile(
-          title: Text("Game index : ${index.toString()}"),
-          subtitle: Text(reservations.toString()),
+          title: Text("User index : ${index.toString()}"),
+          subtitle: Text(username.toString()),
         );
       },
     );

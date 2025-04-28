@@ -9,9 +9,9 @@ class FirestoreTestsInitialState extends FirestoreTestsState {}
 class FirestoreTestsLoadingState extends FirestoreTestsState {}
 
 class FirestoreTestsLoadedState extends FirestoreTestsState {
-  final games;
+  final List<Map<String, dynamic>> users;
 
-  const FirestoreTestsLoadedState(this.games);
+  const FirestoreTestsLoadedState(this.users);
 }
 
 class FirestoreTestsSuccessState extends FirestoreTestsState {}

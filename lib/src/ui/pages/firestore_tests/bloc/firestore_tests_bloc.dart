@@ -13,8 +13,8 @@ class FirestoreTestsBloc extends Bloc<FirestoreTestsEvent, FirestoreTestsState> 
     emit(FirestoreTestsLoadingState());
     try {
       FirestoreService fsService = FirestoreService();
-      final games = await fsService.getGames();
-      emit(FirestoreTestsLoadedState(games));
+      final users = await fsService.getUsers();
+      emit(FirestoreTestsLoadedState(users));
     } catch (e) {
       emit(FirestoreTestsFailureState(errorMessage: e.toString()));
     }
