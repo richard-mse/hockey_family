@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hockey_family/src/services/app_service.dart';
+import 'package:hockey_family/src/ui/pages/firestore_tests/view/firestore_tests_view.dart';
 import 'package:hockey_family/src/ui/pages/home/view/home_view.dart';
 import 'package:hockey_family/src/ui/pages/match/view/match_view.dart';
 import 'package:hockey_family/src/ui/pages/splash/splash_view.dart';
@@ -47,10 +48,16 @@ class AppRouter {
               ),
             ),
             GoRoute(
-                path: RouteNames.match,
-                pageBuilder: (context, state) => const NoTransitionPage(
-                  child: MatchPage(),
-                ),
+              path: RouteNames.test,
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: FirestoreTestsPage(),
+              ),
+            ),
+            GoRoute(
+              path: RouteNames.match,
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: MatchPage(),
+              ),
             ),
           ]
       ),
