@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hockey_family/src/repositories/game_repository.dart';
-import '../../game_api/storage_game_api.dart';
+import 'storage_game_api.dart';
 
 class AppService with ChangeNotifier {
   bool _initialized = false;

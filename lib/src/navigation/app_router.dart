@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hockey_family/src/services/app_service.dart';
 import 'package:hockey_family/src/ui/pages/current_games/view/current_view.dart';
 import 'package:hockey_family/src/ui/pages/firestore_tests/view/firestore_tests_view.dart';
 import 'package:hockey_family/src/ui/pages/home/view/home_view.dart';
+import 'package:hockey_family/src/ui/login/login_page.dart';
 import 'package:hockey_family/src/ui/pages/splash/splash_view.dart';
+import '../repositories/user_repository.dart';
+import '../ui/login/login_cubit.dart';
 import './routes.dart';
 import './scaffold_with_nav_bar.dart';
 
@@ -65,10 +69,19 @@ class AppRouter {
         path: RouteNames.splash,
         builder: (context, state) => const SplashPage(),
       ),
+      GoRoute(
+        path: '/login',
+        builder: (context, state) {
+          return BlocProvider(
+            create: (_) => LoginCubit(UserRepository())..loadUsers(),
+            child: const LoginPage(),
+          );
+        },
+      ),
       // Add other pages here
     ],
     redirect: (BuildContext context, GoRouterState state) {
-      const homeLocation = RouteNames.home;
+      const loginLocation = RouteNames.login;
       const splashLocation = RouteNames.splash;
 
       final isInitialized = _appService.initialized;
@@ -79,7 +92,7 @@ class AppRouter {
       if (!isInitialized && !isGoingToInit) {
         return splashLocation;
       } else if ((isInitialized && isGoingToInit)) {
-        return homeLocation;
+        return loginLocation;
       }
       return null;
     },
