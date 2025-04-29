@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../src/repositories/models/game_model.dart';
+import '../repositories/models/game_model.dart';
 import 'game_api.dart';
 
 class StorageGameApi extends GameApi {

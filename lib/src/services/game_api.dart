@@ -1,4 +1,4 @@
-import '../src/repositories/models/game_model.dart';
+import '../repositories/models/game_model.dart';
 
 abstract class GameApi {
   Future<Set<Game>> getGames();

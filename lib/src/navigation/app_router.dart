@@ -4,7 +4,6 @@ import 'package:hockey_family/src/services/app_service.dart';
 import 'package:hockey_family/src/ui/pages/firestore_tests/view/firestore_tests_view.dart';
 import 'package:hockey_family/src/ui/pages/home/view/home_view.dart';
 import 'package:hockey_family/src/ui/pages/login_page.dart';
-import 'package:hockey_family/src/ui/pages/match/view/match_view.dart';
 import 'package:hockey_family/src/ui/pages/splash/splash_view.dart';
 import './routes.dart';
 import './scaffold_with_nav_bar.dart';

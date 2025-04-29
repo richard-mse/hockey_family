@@ -1,4 +1,4 @@
-import '../../game_api/game_api.dart';
+import '../services/game_api.dart';
 import 'models/game_model.dart';
 
 final class GameRepository {
