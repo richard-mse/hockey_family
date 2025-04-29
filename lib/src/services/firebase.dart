@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirestoreService {
+class FireStoreService {
 
-  static final FirestoreService _firestoreService = FirestoreService.internal();
+  static final FireStoreService _fireStoreService = FireStoreService.internal();
 
-  factory FirestoreService() {
-    return _firestoreService;
+  factory FireStoreService() {
+    return _fireStoreService;
   }
-  FirestoreService.internal();
+  FireStoreService.internal();
 
 
 
