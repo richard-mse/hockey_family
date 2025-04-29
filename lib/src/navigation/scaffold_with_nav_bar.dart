@@ -34,9 +34,9 @@ class _ScaffoldWithNavBar extends State<ScaffoldWithNavBar> {
     ),
     //TODO: Add more tabs here
     const ScaffoldWithNavBarDestination(
-        icon: Icon(Icons.houseboat),
+        icon: Icon(Icons.live_tv),
         initialLocation: RouteNames.match,
-        label: "Match"
+        label: "Today"
     ),
 
   ];
