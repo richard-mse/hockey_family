@@ -10,10 +10,19 @@ class _CurrentViewLoaded extends StatelessWidget {
     final bloc = context.read<CurrentBloc>();
     final state = bloc.state as CurrentLoadedState;
 
+    final cards = <_GamePanel>[];
+
+    for (var game in state.games) {
+      cards.add(_GamePanel(game: game));
+    }
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(16),
-        child: _GamePanel(game: state.games.first),
+        child: ListView(
+          scrollDirection: Axis.vertical,
+          children: cards,
+        )
       )
     );
   }
@@ -33,19 +42,44 @@ class _GamePanel extends StatelessWidget {
         ),
       ),
       child: Container(
-        width: double.infinity, // Full screen width
-        height: 80,
+        width: double.infinity, // full width
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+        margin: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.white,
-              width: 2,
+          border: Border.all(color: Colors.grey.shade300, width: 1.5),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _buildTeamColumn(game.homeTeamShortName!, game.homeTeamResult!),
+            Text(
+              ':',
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
-            borderRadius: BorderRadius.circular(5)
+            _buildTeamColumn(game.awayTeamShortName!, game.awayTeamResult!),
+          ],
         ),
-        child: Center(
-            child: Text("a")
+      )
+    );
+  }
+
+  Widget _buildTeamColumn(String shortName, int score) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image.asset(
+          'assets/logos/$shortName.png',
+          height: 50,
+          width: 50,
+          fit: BoxFit.contain,
         ),
-      ),
+        SizedBox(height: 8),
+        Text(
+          score.toString(),
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+      ],
     );
   }
 }
