@@ -62,42 +62,6 @@ class ScoreSection extends StatelessWidget {
         ),
       ),
     );
-    //  return Padding(
-    //   padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 50.0),
-    //   child: Row(
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     children: <Widget>[
-    //       Column(
-    //         spacing: 50,
-    //         children: [
-    //           SizedBox(
-    //             width: 100,
-    //             height: 100,
-    //             child: Image(image: AssetImage("assets/logos/${game.homeTeamShortName}.png")),
-    //           ),
-    //           Score(game.homeTeamResult!),
-    //         ],
-    //       ),
-    //       Padding(
-    //         padding: EdgeInsets.symmetric(horizontal: 100.0),
-    //         child: Text(
-    //           "VS",
-    //           style: TextStyle(fontSize: 50),
-    //         ),
-    //       ),
-    //       Column(
-    //         spacing: 50,
-    //         children: [
-    //           SizedBox(
-    //             width: 100,
-    //             height: 100,
-    //             child: Image(image: AssetImage("assets/logos/${game.awayTeamShortName}.png")),
-    //           ),
-    //           Score(game.awayTeamResult!),
-    //         ],
-    //       ),
-    //     ],
-    //   ),
   }
 
   Widget _buildTeamColumn(String name, int score) {
