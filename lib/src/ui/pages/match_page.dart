@@ -95,10 +95,13 @@ class MatchInfoSection extends StatelessWidget {
     TODO:
     If the firebase db has a game with id game.gameId AND there is a reservation under the same username as the current logged in user
       change the button to "Remove reservation"
+      on click, removes the reservation in the firebase db
     If the firebase db has a game with id game.gameId AND there is already 4 reservations in the firebase db
       grey out the button
+      cannot interact with it
     Otherwise
       button "Get Ticket"
+      add a new reservation
     */
 
     if (true) {
