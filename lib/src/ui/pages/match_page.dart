@@ -35,15 +35,6 @@ class ScoreSection extends StatelessWidget {
 
   final Game game;
 
-  Widget Score(int result) {
-    return Text(
-      result.toString(),
-      style: TextStyle(
-          fontSize: 20
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Center(
