@@ -47,34 +47,36 @@ class FireStoreService {
   }
 
   Future<List<dynamic>> getGameReservations(String gameId) async {
-    final _db = FirebaseFirestore.instance;
-
-    DocumentReference game = _db.collection("Games").doc(gameId);
-    DocumentSnapshot snapshot = await game.get();
-    final data = snapshot.data();
-
-    if (data == null) {
-      return [];
-    }
-
-    final reservations = data as Map<String, dynamic>;
-
-    return data["Reservations"];
-  }
-
-  Future<void> setGameReservation(String gameId) async {
-    final prefs = await SharedPreferences.getInstance();
-    final _db = FirebaseFirestore.instance;
-
-    final user = prefs.getString("userName");
-
-    DocumentReference game = _db.collection("Games").doc(gameId);
+    DocumentReference game = FirebaseFirestore.instance.collection("Games").doc(gameId);
 
     try {
       DocumentSnapshot docSnapshot = await game.get();
 
       if (docSnapshot.exists) {
         List<dynamic> currentArray = docSnapshot.get('Reservations') ?? [];
+        return currentArray;
+      }
+      return [];
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> setGameReservation(String gameId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString("userName");
+
+    DocumentReference game = FirebaseFirestore.instance.collection("Games").doc(gameId);
+
+    try {
+      DocumentSnapshot docSnapshot = await game.get();
+
+      if (docSnapshot.exists) {
+        List<dynamic> currentArray = docSnapshot.get('Reservations') ?? [];
+
+        if (currentArray.contains(user)) {
+          throw Exception("User already reserved this game");
+        }
 
         if (currentArray.length < 4) {
           currentArray.add(user);
@@ -91,6 +93,32 @@ class FireStoreService {
     } catch (e) {
       rethrow;
     }
-
   }
+
+  Future<void> removeGameReservation(String gameId) async {
+    DocumentReference game = FirebaseFirestore.instance.collection('Games').doc(gameId);
+    final prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString("userName");
+
+    try {
+      DocumentSnapshot docSnapshot = await game.get();
+
+      if (docSnapshot.exists) {
+        List<dynamic> currentArray = docSnapshot.get('Reservations') ?? [];
+
+        if (currentArray.contains(user)) {
+          currentArray.remove(user);
+
+          await game.update({'Reservations': currentArray});
+        } else {
+          throw Exception("Tried to remove a user that isn't in the reservations");
+        }
+      } else {
+        throw Exception("Tried to remove a reservation in a document that doesn't exist");
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }
