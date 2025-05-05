@@ -38,7 +38,7 @@ class _GamePanel extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (_) => GameDetailPage(game: game),
+          builder: (_) => MatchPage(game: game),
         ),
       ),
       child: Container(

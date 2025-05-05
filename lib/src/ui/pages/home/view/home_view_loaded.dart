@@ -10,7 +10,7 @@ class _HomeViewLoaded extends StatelessWidget {
         if (state is HomeNavigateToGameDetailState) {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (_) => GameDetailPage(game: state.game),
+              builder: (_) => MatchPage(game: state.game),
             ),
           );
 
