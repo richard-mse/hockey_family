@@ -12,7 +12,6 @@ class MatchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BlocProvider(
         create: (context) => MatchCubit(game)..loadReservations(),
         child: MatchScreen(game: game,),
@@ -44,7 +43,7 @@ class MatchScreen extends StatelessWidget {
                 return Column(
                   children: [
                     ScoreSection(game: game),
-                    MatchInfoSection(game: game, reservations: state.reservations,)
+                    MatchInfoSection(game: game, reservations: state.reservations, user: state.user,)
                   ],
                 );
               }
@@ -60,35 +59,6 @@ class MatchScreen extends StatelessWidget {
       );
     }
 }
-
-
-// class GameDetailPage extends StatefulWidget {
-//   final Game game;
-//
-//   const GameDetailPage({super.key, required this.game});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("Game Result"),
-//         centerTitle: true,
-//       ),
-//       body: Column(
-//         children: [
-//           ScoreSection(game: game),
-//           MatchInfoSection(game: game)
-//         ],
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//           onPressed: () {
-//             Navigator.pop(context);
-//           },
-//         child: Icon(Icons.keyboard_return),
-//       ),
-//     );
-//   }
-// }
 
 class ScoreSection extends StatelessWidget {
   const ScoreSection({super.key, required this.game});
@@ -136,38 +106,49 @@ class ScoreSection extends StatelessWidget {
 }
 
 class MatchInfoSection extends StatelessWidget {
-  const MatchInfoSection({super.key, required this.game, required this.reservations});
+  const MatchInfoSection({super.key, required this.game, required this.reservations, required this.user});
 
   final Game game;
   final List<dynamic> reservations;
+  final String user;
 
   @override
   Widget build(BuildContext context) {
-    /*
-    TODO:
-    If the firebase db has a game with id game.gameId AND there is a reservation under the same username as the current logged in user
-      change the button to "Remove reservation"
-      on click, removes the reservation in the firebase db
-    If the firebase db has a game with id game.gameId AND there is already 4 reservations in the firebase db
-      grey out the button
-      cannot interact with it
-    Otherwise
-      button "Get Ticket"
-      add a new reservation
-    */
-    FireStoreService().getGameReservations(game.gameId!);
+    return Column(
+      children: [
+        ReservationButton(game: game, reservations: reservations, user: user,),
+        Text(reservations.toString())
+      ],
+    );
+  }
+}
 
-    if (true) {
+class ReservationButton extends StatelessWidget {
+
+  const ReservationButton({super.key, required this.game, required this.reservations, required this.user});
+
+  final Game game;
+  final List<dynamic> reservations;
+  final String user;
+
+  @override
+  Widget build(BuildContext context) {
+    if (reservations.length >= 4) {
       return ElevatedButton(
-        onPressed: () {FireStoreService().setGameReservation(game.gameId!);},
-        child: Text(reservations.toString()),
+        onPressed: null,
+        child: Text("Match full"),
+
+      );
+    } else if (reservations.length < 4 && !reservations.contains(user)) {
+      return ElevatedButton(
+          onPressed: () {MatchCubit(game).setReservation();},
+          child: Text("Reserve ticket")
       );
     } else {
       return ElevatedButton(
-          onPressed: () {},
-          child: Text("Remove Reservation")
+          onPressed: () {MatchCubit(game).removeReservation();},
+          child: Text("Remove reservation")
       );
     }
   }
 }
-
