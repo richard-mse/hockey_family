@@ -19,7 +19,6 @@ class _LoginState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    context.read<LoginCubit>().loadUsers();
   }
 
   @override
