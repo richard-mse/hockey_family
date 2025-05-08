@@ -10,9 +10,14 @@ class _GamesViewLoaded extends StatelessWidget {
     final bloc = context.read<GamesBloc>();
     final state = bloc.state as GamesLoadedState;
 
-    final cards = <_GamePanel>[];
+    final cards = <Widget>[];
 
+    var month = -1;
     for (var game in state.games) {
+      if (game.date.month != month) {
+        month = game.date.month;
+        cards.add(MonthItem(monthNumber: month));
+      }
       cards.add(_GamePanel(game: game));
     }
 
@@ -79,6 +84,35 @@ class _GamePanel extends StatelessWidget {
           score.toString(),
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
+      ],
+    );
+  }
+}
+
+class MonthItem extends StatelessWidget {
+  final int monthNumber;
+
+  const MonthItem({super.key, required this.monthNumber});
+
+  String _getMonthName(int month) {
+    if (month < 1 || month > 12) return 'Invalid Month';
+    return DateFormat.MMMM().format(DateTime(0, month));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final monthName = _getMonthName(monthNumber);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 10),
+        Text(
+          monthName,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 4),
+        const Divider(thickness: 1),
       ],
     );
   }
