@@ -141,12 +141,12 @@ class ReservationButton extends StatelessWidget {
       );
     } else if (reservations.length < 4 && !reservations.contains(user)) {
       return ElevatedButton(
-          onPressed: () {MatchCubit(game).setReservation();},
+          onPressed: () {context.read<MatchCubit>().setReservation();},
           child: Text("Reserve ticket")
       );
     } else {
       return ElevatedButton(
-          onPressed: () {MatchCubit(game).removeReservation();},
+          onPressed: () {context.read<MatchCubit>().removeReservation();},
           child: Text("Remove reservation")
       );
     }
