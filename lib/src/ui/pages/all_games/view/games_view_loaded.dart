@@ -54,17 +54,22 @@ class _GamePanel extends StatelessWidget {
           border: Border.all(color: Colors.grey.shade300, width: 1.5),
           borderRadius: BorderRadius.circular(16),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildTeamColumn(game.homeTeamShortName!, game.homeTeamResult!),
-            Text(
-              ':',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-            ),
-            _buildTeamColumn(game.awayTeamShortName!, game.awayTeamResult!),
-          ],
-        ),
+        child: Column(
+         children: [
+           Row(
+             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+             children: [
+               _buildTeamColumn(game.homeTeamShortName!, game.homeTeamResult!),
+               Text(
+                 ':',
+                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+               ),
+               _buildTeamColumn(game.awayTeamShortName!, game.awayTeamResult!),
+             ],
+           ),
+           formattedDateText(game.date)
+         ],
+        )
       )
     );
   }
@@ -116,4 +121,12 @@ class MonthItem extends StatelessWidget {
       ],
     );
   }
+}
+
+Widget formattedDateText(DateTime date) {
+  final String formatted = '${DateFormat.EEEE().format(date)} ${date.day}';
+  return Text(
+    formatted,
+    style: TextStyle(fontSize: 16), // Optional styling
+  );
 }
