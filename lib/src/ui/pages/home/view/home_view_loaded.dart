@@ -81,56 +81,59 @@ class _TableCalendarHockeyState extends State<TableCalendarHockey> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TableCalendar(
-          firstDay: DateTime.utc(2010, 10, 16),
-          lastDay: DateTime.utc(2030, 3, 14),
-          focusedDay: _focusedDay,
-          calendarFormat: _calendarFormat,
-          rowHeight: 100,
-          selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-          onDaySelected: _onDaySelected,
-          onFormatChanged: (format) {
-            setState(() {
-              _calendarFormat = format;
-            });
-          },
-          onPageChanged: (focusedDay) {
-            _focusedDay = focusedDay;
-          },
-          locale: Localizations.localeOf(context).languageCode,
-          calendarStyle: const CalendarStyle(
-            cellMargin: EdgeInsets.all(10),
-            cellPadding: EdgeInsets.all(10),
-          ),
-          calendarBuilders: CalendarBuilders(
-            defaultBuilder: (context, day, focusedDay) {
-              final game = _getGameIfExists(day);
-              return MyDayCellWidget(
-                day: day,
-                game: game,
-                hasGame: game != null,
-              );
-            },
-            selectedBuilder: (context, day, focusedDay) {
-              final game = _getGameIfExists(day);
-              return MyDayCellWidget(
-                day: day,
-                game: game,
-                isSelected: true,
-                isFocus: isSameDay(_selectedDay, focusedDay),
-                hasGame: game != null,
-              );
-            },
-            todayBuilder: (context, day, focusedDay) {
-              final game = _getGameIfExists(day);
-              return MyDayCellWidget(
-                day: day,
-                game: game,
-                isFocus: true,
-                hasGame: game != null,
-              );
-            },
-          ),
+          Expanded(
+            child: TableCalendar(
+                shouldFillViewport: true,
+                firstDay: DateTime.utc(2010, 10, 16),
+                lastDay: DateTime.utc(2030, 3, 14),
+                focusedDay: _focusedDay,
+                calendarFormat: _calendarFormat,
+                // rowHeight: 50,
+                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                onDaySelected: _onDaySelected,
+                onFormatChanged: (format) {
+                  setState(() {
+                    _calendarFormat = format;
+                  });
+                },
+                onPageChanged: (focusedDay) {
+                  _focusedDay = focusedDay;
+                },
+                locale: Localizations.localeOf(context).languageCode,
+                calendarStyle: const CalendarStyle(
+                  cellMargin: EdgeInsets.all(10),
+                  cellPadding: EdgeInsets.all(10),
+                ),
+                calendarBuilders: CalendarBuilders(
+                  defaultBuilder: (context, day, focusedDay) {
+                    final game = _getGameIfExists(day);
+                    return MyDayCellWidget(
+                      day: day,
+                      game: game,
+                      hasGame: game != null,
+                    );
+                  },
+                  selectedBuilder: (context, day, focusedDay) {
+                    final game = _getGameIfExists(day);
+                    return MyDayCellWidget(
+                      day: day,
+                      game: game,
+                      isSelected: true,
+                      isFocus: isSameDay(_selectedDay, focusedDay),
+                      hasGame: game != null,
+                    );
+                  },
+                  todayBuilder: (context, day, focusedDay) {
+                    final game = _getGameIfExists(day);
+                    return MyDayCellWidget(
+                      day: day,
+                      game: game,
+                      isFocus: true,
+                      hasGame: game != null,
+                    );
+                  },
+                ),
+              )
         ),
       ],
     );
@@ -157,7 +160,7 @@ class MyDayCellWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onDoubleTap: () {
+      onTap: () {
         if (game != null) {
           context.read<HomeBloc>().add(HomeNavigateToGameDetailEvent(game!));
         }

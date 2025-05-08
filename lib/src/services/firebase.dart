@@ -31,6 +31,7 @@ class FireStoreService {
 
   Future<List<Map<String, dynamic>>> getUsers() async {
     try {
+
       final _db = FirebaseFirestore.instance;
       CollectionReference gamesCollection = _db.collection('Users');
 
