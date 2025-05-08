@@ -2,7 +2,7 @@ abstract class RouteNames {
   static const home = "/home";
   static const account = "/account";
   static const splash = "/splash";
-  static const test = "/test";
+  static const games = "/games";
   static const match = "/match";
   static const login = "/login";
 }

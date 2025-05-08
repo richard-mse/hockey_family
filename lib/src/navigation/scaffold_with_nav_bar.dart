@@ -28,9 +28,9 @@ class _ScaffoldWithNavBar extends State<ScaffoldWithNavBar> {
         label: "Account"
     ),
     const ScaffoldWithNavBarDestination(
-        icon: Icon(Icons.flood),
-        initialLocation: RouteNames.test,
-        label: "Test"
+        icon: Icon(Icons.sports_hockey),
+        initialLocation: RouteNames.games,
+        label: "Games"
     ),
     //TODO: Add more tabs here
     const ScaffoldWithNavBarDestination(
