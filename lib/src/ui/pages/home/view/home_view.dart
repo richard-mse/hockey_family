@@ -6,7 +6,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../../../../constants.dart';
 import '../../../../repositories/game_repository.dart';
 import '../../../../repositories/models/game_model.dart';
-import '../../match_page.dart';
+import '../../match/match_page.dart';
 import '../bloc/home_bloc.dart';
 
 part './home_view_initial.dart';
