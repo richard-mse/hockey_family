@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hockey_family/src/services/app_service.dart';
+import 'package:hockey_family/src/ui/pages/all_games/view/games_view.dart';
 import 'package:hockey_family/src/ui/pages/current_games/view/current_view.dart';
-import 'package:hockey_family/src/ui/pages/firestore_tests/view/firestore_tests_view.dart';
 import 'package:hockey_family/src/ui/pages/home/view/home_view.dart';
 import 'package:hockey_family/src/ui/login/login_page.dart';
 import 'package:hockey_family/src/ui/pages/splash/splash_view.dart';
@@ -52,9 +52,9 @@ class AppRouter {
               ),
             ),
             GoRoute(
-              path: RouteNames.test,
+              path: RouteNames.games,
               pageBuilder: (context, state) => const NoTransitionPage(
-                child: FirestoreTestsPage(),
+                child: GamesPage(),
               ),
             ),
             GoRoute(
