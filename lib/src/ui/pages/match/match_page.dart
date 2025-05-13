@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hockey_family/src/services/firebase.dart';
 import 'package:hockey_family/src/ui/pages/match/match_cubit.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../repositories/models/game_model.dart';
 import 'match_states.dart';
@@ -43,7 +43,11 @@ class MatchScreen extends StatelessWidget {
                 return Column(
                   children: [
                     ScoreSection(game: game),
-                    MatchInfoSection(game: game, reservations: state.reservations, user: state.user,)
+                    MatchInfoSection(game: game, reservations: state.reservations, user: state.user,),
+                    GameQrCode(
+                      user: state.user,
+                      reservations: state.reservations,
+                    ),
                   ],
                 );
               }
@@ -150,5 +154,48 @@ class ReservationButton extends StatelessWidget {
           child: Text("Remove reservation")
       );
     }
+  }
+}
+
+class GameQrCode extends StatefulWidget {
+  final String user;
+  final List<dynamic> reservations;
+
+  const GameQrCode({super.key, required this.user, required this.reservations});
+
+  @override
+  State<GameQrCode> createState() => _GameQrCodeState();
+}
+
+class _GameQrCodeState extends State<GameQrCode> {
+  bool get userHasReservation => widget.reservations.contains(widget.user);
+
+  @override
+  Widget build(BuildContext context) {
+    if (!userHasReservation) {
+      return const SizedBox.shrink(); // 👤 L'utilisateur n'a pas réservé → rien à afficher
+    }
+
+    return Container(
+      margin: const EdgeInsets.only(top: 24),
+      padding: const EdgeInsets.all(16),
+      color: Colors.white,
+      child: Column(
+        children: [
+          const Text(
+            "Votre billet QR",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 12),
+          QrImageView(
+            data: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+            version: QrVersions.auto,
+            size: 200.0,
+            backgroundColor: Colors.white,
+            gapless: false,
+          ),
+        ],
+      ),
+    );
   }
 }
