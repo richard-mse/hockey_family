@@ -1,3 +1,10 @@
 {
-  "appTitle": "hockey_family"
+  "appTitle": "hockey_family",
+  "btn_reservation_empty": "Reserve your ticket",
+  "btn_reservation_full": "Reservation's list is full",
+  "btn_reservation_remove": "Withdraw match's reservation",
+  "title_game_result_page": "Game's result",
+  "title_game_page": "All matches",
+  "title_current_game_page": "Games of the day",
+  "title_home_page": "Home page"
 }

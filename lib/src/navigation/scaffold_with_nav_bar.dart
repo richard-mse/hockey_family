@@ -23,11 +23,6 @@ class _ScaffoldWithNavBar extends State<ScaffoldWithNavBar> {
         label: "Home"
     ),
     const ScaffoldWithNavBarDestination(
-        icon: Icon(Icons.person),
-        initialLocation: RouteNames.account,
-        label: "Account"
-    ),
-    const ScaffoldWithNavBarDestination(
         icon: Icon(Icons.sports_hockey),
         initialLocation: RouteNames.games,
         label: "Games"

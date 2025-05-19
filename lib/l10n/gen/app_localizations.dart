@@ -101,6 +101,48 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Hockey Famille fr'**
   String get appTitle;
+
+  /// No description provided for @btn_reservation_empty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réserve ton billet'**
+  String get btn_reservation_empty;
+
+  /// No description provided for @btn_reservation_full.
+  ///
+  /// In fr, this message translates to:
+  /// **'La liste de réservation est remplie'**
+  String get btn_reservation_full;
+
+  /// No description provided for @btn_reservation_remove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Se désinscrire de la liste'**
+  String get btn_reservation_remove;
+
+  /// No description provided for @title_game_result_page.
+  ///
+  /// In fr, this message translates to:
+  /// **'Résultat du match'**
+  String get title_game_result_page;
+
+  /// No description provided for @title_game_page.
+  ///
+  /// In fr, this message translates to:
+  /// **'Match de la saison'**
+  String get title_game_page;
+
+  /// No description provided for @title_current_game_page.
+  ///
+  /// In fr, this message translates to:
+  /// **'Match du jour'**
+  String get title_current_game_page;
+
+  /// No description provided for @title_home_page.
+  ///
+  /// In fr, this message translates to:
+  /// **'Page d\'acceuil'**
+  String get title_home_page;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

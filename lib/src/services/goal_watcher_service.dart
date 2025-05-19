@@ -15,7 +15,7 @@ class GoalWatcherService {
   Timer? _timer;
   final Random _random = Random();
 
-  void startPolling({Duration interval = const Duration(seconds: 10)}) {
+  void startPolling({Duration interval = const Duration(seconds: 30)}) {
     previousGameNotification = currentGameNotification.copy();
 
     _timer = Timer.periodic(interval, (_) async {

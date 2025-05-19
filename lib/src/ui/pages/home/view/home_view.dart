@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../../constants.dart';
+import '../../../../../l10n/gen/app_localizations.dart';
 import '../../../../repositories/game_repository.dart';
 import '../../../../repositories/models/game_model.dart';
 import '../../match/match_page.dart';
@@ -25,7 +26,7 @@ class HomePage extends StatelessWidget {
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, HomeState state) => Scaffold(
           appBar: AppBar(
-            title: const Text('Home Page'),
+            title: Text(AppLocalizations.of(context)!.title_home_page),
           ),
           body: _getBody(state, context),
         ),

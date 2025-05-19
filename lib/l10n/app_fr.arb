@@ -1,3 +1,10 @@
 {
-  "appTitle": "Hockey Famille fr"
+  "appTitle": "Hockey Famille fr",
+  "btn_reservation_empty": "Réserve ton billet",
+  "btn_reservation_full": "La liste de réservation est remplie",
+  "btn_reservation_remove": "Se désinscrire de la liste",
+  "title_game_result_page": "Résultat du match",
+  "title_game_page": "Match de la saison",
+  "title_current_game_page": "Match du jour",
+  "title_home_page": "Page d'acceuil"
 }

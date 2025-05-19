@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hockey_family/src/ui/pages/match/match_cubit.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../../../l10n/gen/app_localizations.dart';
 import '../../../repositories/models/game_model.dart';
 import 'match_states.dart';
 
@@ -27,7 +28,7 @@ class MatchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Game Result"),
+          title: Text(AppLocalizations.of(context)!.title_game_result_page),
           centerTitle: true,
         ),
         body: BlocBuilder<MatchCubit, MatchState>(
@@ -140,18 +141,18 @@ class ReservationButton extends StatelessWidget {
     if (reservations.length >= 4) {
       return ElevatedButton(
         onPressed: null,
-        child: Text("Match full"),
+        child: Text(AppLocalizations.of(context)!.btn_reservation_full),
 
       );
     } else if (reservations.length < 4 && !reservations.contains(user)) {
       return ElevatedButton(
           onPressed: () {context.read<MatchCubit>().setReservation();},
-          child: Text("Reserve ticket")
+          child: Text(AppLocalizations.of(context)!.btn_reservation_empty)
       );
     } else {
       return ElevatedButton(
           onPressed: () {context.read<MatchCubit>().removeReservation();},
-          child: Text("Remove reservation")
+          child: Text(AppLocalizations.of(context)!.btn_reservation_remove)
       );
     }
   }
@@ -173,7 +174,7 @@ class _GameQrCodeState extends State<GameQrCode> {
   @override
   Widget build(BuildContext context) {
     if (!userHasReservation) {
-      return const SizedBox.shrink(); // 👤 L'utilisateur n'a pas réservé → rien à afficher
+      return const SizedBox.shrink();
     }
 
     return Container(

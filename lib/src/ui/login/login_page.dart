@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../repositories/models/user_model.dart';
 import 'login_cubit.dart';
 import 'login_state.dart';
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,9 +17,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
-  @override
-  void initState() {
-    super.initState();
+  Future<String> fetchDogImage() async {
+    final response = await http.get(Uri.parse('https://dog.ceo/api/breeds/image/random'));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data['message'];
+    } else {
+      throw Exception('Failed to load dog image');
+    }
   }
 
   @override
@@ -56,14 +62,25 @@ class _LoginState extends State<LoginPage> {
                     child: Column(
                       children: [
                         Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              image: const DecorationImage(
-                                image: AssetImage('assets/images/zzz_icon.png'),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                          child: FutureBuilder<String>(
+                            future: fetchDogImage(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return const Center(child: CircularProgressIndicator());
+                              } else if (snapshot.hasError) {
+                                return const Center(child: Icon(Icons.error));
+                              } else {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    image: DecorationImage(
+                                      image: NetworkImage(snapshot.data!),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -80,7 +97,7 @@ class _LoginState extends State<LoginPage> {
                 },
               );
             }
-            return const SizedBox.shrink(); // pour l’état initial
+            return const SizedBox.shrink();
           },
         ),
       ),

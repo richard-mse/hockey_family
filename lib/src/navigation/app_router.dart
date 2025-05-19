@@ -46,12 +46,6 @@ class AppRouter {
               ),
             ),
             GoRoute(
-              path: RouteNames.account,
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: Center(child: Text("Account"),),
-              ),
-            ),
-            GoRoute(
               path: RouteNames.games,
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: GamesPage(),

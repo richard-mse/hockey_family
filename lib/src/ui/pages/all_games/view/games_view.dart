@@ -2,9 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:table_calendar/table_calendar.dart';
 
-import '../../../../../constants.dart';
+import '../../../../../l10n/gen/app_localizations.dart';
 import '../../../../repositories/game_repository.dart';
 import '../../../../repositories/models/game_model.dart';
 import '../../match/match_page.dart';
@@ -26,7 +25,7 @@ class GamesPage extends StatelessWidget {
       child: BlocBuilder<GamesBloc, GamesState>(
         builder: (context, GamesState state) => Scaffold(
           appBar: AppBar(
-            title: const Text('Games Page'),
+            title: Text(AppLocalizations.of(context)!.title_game_page)
           ),
           body: _getBody(state, context),
         ),
